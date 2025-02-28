@@ -1,0 +1,47 @@
+groups:
+  - name: api_alerts
+    rules:
+      # Yüksek Hata Oranı
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m])) 
+          / 
+          sum(rate(http_requests_total[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Yüksek hata oranı tespit edildi"
+          description: "Son 5 dakikada %5'ten fazla hata oluştu"
+
+      # Yüksek Latency
+      - alert: HighLatency
+        expr: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Yüksek gecikme süreleri"
+          description: "95. persantil yanıt süresi 2 saniyeyi aşıyor"
+
+      # Memory Kullanımı
+      - alert: HighMemoryUsage
+        expr: memory_usage_bytes{type="rss"} > 858993459  # 800MB
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Yüksek memory kullanımı"
+          description: "Memory kullanımı 800MB'ı aştı"
+
+      # Scraping Hataları
+      - alert: ScrapingErrors
+        expr: |
+          increase(errors_total{service="scraper"}[15m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Çok sayıda scraping hatası"
+          description: "Son 15 dakikada 5'ten fazla scraping hatası oluştu" 
