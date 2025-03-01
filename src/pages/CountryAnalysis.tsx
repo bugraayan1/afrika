@@ -7,13 +7,20 @@ import {
   StepLabel, 
   Button, 
   Typography,
-  CircularProgress
+  CircularProgress,
+  Grid,
+  Chip,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import CountrySelector from '../components/CountrySelector';
 import MinistryList from '../components/MinistryList';
 import AnalysisResults from '../components/AnalysisResults';
 import { countryService } from '../services/api';
 import type { Analysis } from '../types';
+import { mockCountryMetrics } from '../data/mockCountryMetrics';
 
 const steps = ['Ülke Seçimi', 'Bakanlık Seçimi', 'Analiz Sonuçları'];
 
@@ -24,6 +31,8 @@ const CountryAnalysis: React.FC = () => {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const country = mockCountryMetrics[0]; // Örnek olarak ilk ülkeyi gösteriyoruz
 
   const handleNext = async () => {
     if (activeStep === 1) {
@@ -79,7 +88,81 @@ const CountryAnalysis: React.FC = () => {
   };
 
   return (
-    <Box className="p-6 max-w-4xl mx-auto">
+    <Box sx={{ p: 3 }}>
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Avatar src={country.flag} sx={{ width: 60, height: 60, mr: 2 }} />
+          <Typography variant="h4">{country.countryName}</Typography>
+        </Box>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 2, textAlign: 'center' }}>
+              <Typography color="text.secondary">Başarılı Transferler</Typography>
+              <Typography variant="h3">{country.successfulTransfers}</Typography>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 2, textAlign: 'center' }}>
+              <Typography color="text.secondary">Devam Eden Projeler</Typography>
+              <Typography variant="h3">{country.ongoingProjects}</Typography>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 2, textAlign: 'center' }}>
+              <Typography color="text.secondary">Teknoloji Hazırlık Skoru</Typography>
+              <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                <CircularProgress
+                  variant="determinate"
+                  value={country.techReadinessScore}
+                  size={80}
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Typography variant="h6">{country.techReadinessScore}%</Typography>
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>Öncelikli Alanlar</Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {country.priorityAreas.map((area, index) => (
+                  <Chip key={index} label={area} />
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>Yerel Partnerler</Typography>
+              <List>
+                {country.localPartners.map((partner, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={partner} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Paper>
+
       <Paper className="p-6">
         <Typography component="h1" variant="h4" className="mb-6">
           Ülke Teknoloji İhtiyaç Analizi

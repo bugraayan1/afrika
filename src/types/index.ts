@@ -33,4 +33,30 @@ export interface Analysis {
   findings: string[];
   recommendations: string[];
   timestamp: string;
+}
+
+export interface TransferProgress {
+  id: string;
+  projectId: string;
+  stage: 'başlangıç' | 'eğitim' | 'uygulama' | 'değerlendirme';
+  completionRate: number;
+  startDate: string;
+  estimatedEndDate: string;
+  actualEndDate?: string;
+  milestones: {
+    title: string;
+    dueDate: string;
+    status: 'beklemede' | 'devam_ediyor' | 'tamamlandı';
+  }[];
+}
+
+export interface CountryMetrics {
+  countryName: string;
+  flag: string;
+  successfulTransfers: number;
+  ongoingProjects: number;
+  techReadinessScore: number;
+  priorityAreas: string[];
+  localPartners: string[];
+  implementationChallenges: string[];
 } 

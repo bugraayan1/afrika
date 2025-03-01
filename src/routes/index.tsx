@@ -6,6 +6,7 @@ import AgentMonitoring from '../pages/AgentMonitoring';
 import TechnologyTransfer from '../pages/TechnologyTransfer';
 import AgentProfile from '../pages/AgentProfile';
 import About from '../pages/About';
+import TransferProgress from '../pages/TransferProgress';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/agents" element={<AgentMonitoring />} />
       <Route path="/agents/:id" element={<AgentProfile />} />
       <Route path="/transfer" element={<TechnologyTransfer />} />
+      <Route path="/transfer-progress" element={<TransferProgress />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
