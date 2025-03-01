@@ -16,10 +16,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Button color="inherit" component={Link} to="/">
               Anasayfa
             </Button>
+            <Button color="inherit" component={Link} to="/transfer-progress">
+              Transfer Takibi
+            </Button>
+            <Button color="inherit" component={Link} to="/country-analysis">
+              Ülke Analizi
+            </Button>
             <Button color="inherit" component={Link} to="/about">
               Hakkında
             </Button>
-            {/* Diğer linkler */}
           </Box>
         </Toolbar>
       </AppBar>

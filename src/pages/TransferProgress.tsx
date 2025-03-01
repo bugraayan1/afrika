@@ -65,7 +65,11 @@ const TransferProgress: React.FC = () => {
               Kilometre Taşları
             </Typography>
             <List>
-              {transfer.milestones.map((milestone, index) => (
+              {transfer.milestones.map((milestone: { 
+                title: string; 
+                dueDate: string; 
+                status: 'beklemede' | 'devam_ediyor' | 'tamamlandı' 
+              }, index: number) => (
                 <ListItem key={index}>
                   <ListItemText
                     primary={milestone.title}
@@ -88,4 +92,4 @@ const TransferProgress: React.FC = () => {
   );
 };
 
-export default TransferProgress; 
+export default TransferProgress;

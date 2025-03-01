@@ -1,4 +1,18 @@
-import { TransferProgress } from '../types';
+// Interface'i direkt burada tanımlayalım
+interface TransferProgress {
+  id: string;
+  projectId: string;
+  stage: 'başlangıç' | 'eğitim' | 'uygulama' | 'değerlendirme';
+  completionRate: number;
+  startDate: string;
+  estimatedEndDate: string;
+  actualEndDate?: string;
+  milestones: {
+    title: string;
+    dueDate: string;
+    status: 'beklemede' | 'devam_ediyor' | 'tamamlandı';
+  }[];
+}
 
 export const mockTransferProgress: TransferProgress[] = [
   {
@@ -26,5 +40,29 @@ export const mockTransferProgress: TransferProgress[] = [
       }
     ]
   },
-  // ... diğer transfer progress verileri
+  {
+    id: "2",
+    projectId: "2",
+    stage: "eğitim",
+    completionRate: 35,
+    startDate: "2024-02-01",
+    estimatedEndDate: "2024-08-30",
+    milestones: [
+      {
+        title: "Proje Planlaması",
+        dueDate: "2024-02-10",
+        status: "tamamlandı"
+      },
+      {
+        title: "Eğitmen Eğitimi",
+        dueDate: "2024-03-30",
+        status: "devam_ediyor"
+      },
+      {
+        title: "Saha Uygulaması",
+        dueDate: "2024-07-15",
+        status: "beklemede"
+      }
+    ]
+  }
 ]; 

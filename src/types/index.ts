@@ -6,11 +6,20 @@ export interface Project {
   progress: number;
 }
 
-export interface AgentStatus {
+export interface Agent {
   id: string;
   name: string;
-  status: 'online' | 'offline' | 'working';
+  status: 'online' | 'offline';
   lastActive: string;
+  expertise: string;
+  specialization: string[];
+  experience: number;
+  successRate: number;
+  completedProjects: number;
+  location: string;
+  languages: string[];
+  description: string;
+  avatar: string;
 }
 
 export interface Transfer {

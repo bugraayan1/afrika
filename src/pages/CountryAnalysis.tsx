@@ -141,7 +141,7 @@ const CountryAnalysis: React.FC = () => {
             <Paper sx={{ p: 2 }}>
               <Typography variant="h6" gutterBottom>Öncelikli Alanlar</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                {country.priorityAreas.map((area, index) => (
+                {country.priorityAreas.map((area: string, index: number) => (
                   <Chip key={index} label={area} />
                 ))}
               </Box>
@@ -152,7 +152,7 @@ const CountryAnalysis: React.FC = () => {
             <Paper sx={{ p: 2 }}>
               <Typography variant="h6" gutterBottom>Yerel Partnerler</Typography>
               <List>
-                {country.localPartners.map((partner, index) => (
+                {country.localPartners.map((partner: string, index: number) => (
                   <ListItem key={index}>
                     <ListItemText primary={partner} />
                   </ListItem>
