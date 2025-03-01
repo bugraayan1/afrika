@@ -11,6 +11,15 @@ export interface Agent {
   name: string;
   status: string;
   lastActive: string;
+  expertise: string;
+  specialization: string[];
+  experience: number; // yıl cinsinden
+  successRate: number; // yüzde cinsinden
+  completedProjects: number;
+  location: string;
+  languages: string[];
+  description: string;
+  avatar: string;
 }
 
 export interface Transfer {

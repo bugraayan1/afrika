@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Project, Agent, Transfer } from '../types';
+import { mockAgents } from '../data/mockAgents';
 
 // Mock data
 const mockProjects: Project[] = [
@@ -19,32 +20,7 @@ const mockProjects: Project[] = [
   }
 ];
 
-const mockAgents: Agent[] = [
-  {
-    id: "1",
-    name: "Ahmet Yılmaz",
-    status: "online",
-    lastActive: "2 dakika önce"
-  },
-  {
-    id: "2",
-    name: "Ayşe Kaya",
-    status: "offline",
-    lastActive: "1 saat önce"
-  },
-  {
-    id: "3",
-    name: "Mehmet Demir",
-    status: "online",
-    lastActive: "5 dakika önce"
-  },
-  {
-    id: "4",
-    name: "Fatma Öztürk",
-    status: "offline",
-    lastActive: "3 saat önce"
-  }
-];
+// mockAgents artık data/mockAgents.ts'den geliyor
 
 const mockTransfers: Transfer[] = [
   {
@@ -70,38 +46,25 @@ export const useDashboard = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [transfers, setTransfers] = useState<Transfer[]>([]);
 
-  useEffect(() => {
-    // Simüle edilmiş API çağrısı
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        // API çağrısını simüle etmek için timeout kullanıyoruz
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        setProjects(mockProjects);
-        setAgents(mockAgents);
-        setTransfers(mockTransfers);
-        setError(null);
-      } catch (err) {
-        setError('Veri yüklenirken bir hata oluştu');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const refresh = () => {
-    setLoading(true);
-    // Yenileme simülasyonu
-    setTimeout(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       setProjects(mockProjects);
       setAgents(mockAgents);
       setTransfers(mockTransfers);
+      setError(null);
+    } catch (err) {
+      setError('Veri yüklenirken bir hata oluştu');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     loading,
@@ -109,6 +72,6 @@ export const useDashboard = () => {
     projects,
     agents,
     transfers,
-    refresh
+    refresh: () => fetchData() // Burada fonksiyonu çağırmak yerine referansını döndürüyoruz
   };
 }; 

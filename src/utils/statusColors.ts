@@ -1,17 +1,19 @@
-type StatusColor = 'success' | 'warning' | 'error' | 'default';
+type StatusColor = 'success' | 'warning' | 'error' | 'info' | 'default';
 
-export const getStatusColor = (status: string): StatusColor => {
-  switch (status.toLowerCase()) {
-    case 'active':
-    case 'online':
-      return 'success';
-    case 'warning':
-    case 'pending':
-      return 'warning';
-    case 'error':
-    case 'offline':
-      return 'error';
-    default:
-      return 'default';
-  }
+interface StatusConfig {
+  color: StatusColor;
+  label: string;
+}
+
+export const getStatusConfig = (status: string): StatusConfig => {
+  const statusMap: Record<string, StatusConfig> = {
+    active: { color: 'success', label: 'Aktif' },
+    pending: { color: 'warning', label: 'Beklemede' },
+    completed: { color: 'info', label: 'Tamamlandı' },
+    failed: { color: 'error', label: 'Başarısız' },
+    online: { color: 'success', label: 'Çevrimiçi' },
+    offline: { color: 'error', label: 'Çevrimdışı' },
+  };
+
+  return statusMap[status.toLowerCase()] || { color: 'default', label: status };
 }; 
